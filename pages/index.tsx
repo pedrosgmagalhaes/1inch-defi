@@ -1,10 +1,27 @@
+import React, {useEffect} from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import { Form, Button } from "react-bootstrap"
 import styles from "../styles/Home.module.scss"
+import { setAuthState } from "../store/authSlice"
+import { wrapper } from "../store/store";
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      await store.dispatch(setAuthState(false))
+      console.log("State on server", store.getState())
+      return {
+        props: {
+          authState: false,
+        },
+      }
+    }
+)
 
 const Home: NextPage = () => {
+  
   return (
     <div className={styles.container}>
       <Head>
