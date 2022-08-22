@@ -1,17 +1,15 @@
-import React, {useEffect} from "react"
+import React from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
-import Image from "next/image"
 import { Form, Button } from "react-bootstrap"
 import styles from "../styles/Home.module.scss"
 import { setAuthState } from "../store/authSlice"
-import { wrapper } from "../store/store";
+import { wrapper } from "../store/store"
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params }) => {
       await store.dispatch(setAuthState(false))
-      console.log("State on server", store.getState())
       return {
         props: {
           authState: false,
@@ -21,7 +19,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 )
 
 const Home: NextPage = () => {
-  
   return (
     <div className={styles.container}>
       <Head>
@@ -47,6 +44,32 @@ const Home: NextPage = () => {
               Enter the smart contract from your token out
             </Form.Text>
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="totalAmount">
+            <Form.Label htmlFor="amount">Amount</Form.Label>
+            <Form.Control
+              type="number"
+              id="amount"
+              aria-describedby="totalAmount"
+            />
+            <Form.Text id="totalAmount" muted>
+              Insert the total amount to buy.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="totalSlippage">
+            <Form.Label htmlFor="amount">Slippage</Form.Label>
+            <Form.Control
+              type="number"
+              id="slippage"
+              placeholder="1"
+              aria-describedby="totalSlippage"
+            />
+            <Form.Text id="totalSlippage" muted>
+              Insert the slippage amount to buy. Default is 1
+            </Form.Text>
+          </Form.Group>
+
           <Button variant="primary" type="submit">
             Verify
           </Button>

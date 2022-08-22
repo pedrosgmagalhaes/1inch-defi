@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./store";
-import { useConnect, useDisconnect } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
 
 export interface AuthState {
     authState: boolean;
+    wallet: string;
 }
 
 const initialState: AuthState = {
     authState: false,
+    wallet: ""
 };
 
 const sliceProps = {
