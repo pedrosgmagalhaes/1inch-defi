@@ -16,10 +16,6 @@ const Navegation: NextPage = () => {
   })
   const { disconnect } = useDisconnect()
 
-  useEffect(() => {
-    console.log(address)
-  }, [address, isConnected])
-
   return (
     <>
       <Navbar bg="light" expand="lg">
