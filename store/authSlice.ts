@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "./store";
 import handler from "../utils/services/api"
+import { HYDRATE } from "next-redux-wrapper";
 
 export interface AuthState {
     authState: boolean;
@@ -12,7 +13,7 @@ const initialState: AuthState = {
     wallet: ""
 };
 
-const sliceProps = {
+export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
@@ -20,9 +21,16 @@ const sliceProps = {
             state.authState = action.payload;
         },
     },
-}
-
-export const authSlice = createSlice(sliceProps);
+    extraReducers: {
+        [HYDRATE]: (state, action: PayloadAction<any>) => {
+            return {
+                ...state,
+                ...action.payload.auth,
+            };
+        },
+    }
+},
+);
 
 export const { setAuthState } = authSlice.actions;
 
